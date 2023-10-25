@@ -2,6 +2,8 @@ const inquirer = require('inquirer');
 const path = require('path');
 const fs = require('fs');
 const Triangle = require('./lib/triangle');
+const Circle = require('./lib/circle');
+const Square = require('./lib/square');
 
 const OUTPUT_DIR = "./out";
 const OUTPUT_FILENAME = "logo.svg";
@@ -21,7 +23,7 @@ function isValidColor(colorString) {
     "white", "black", "gray", "red", "green", "blue", "yellow", "cyan", "magenta"
   ];
 
-  if(!KeywordColors.includes(colorString.toLowerCase()) && (colorString.startsWith("0x") || isNaN(colorString))) {
+  if(!KeywordColors.includes(colorString.toLowerCase()) && (!colorString.startsWith("0x") || isNaN(colorString))) {
     return "Not a valid color";
   }
 
@@ -65,10 +67,21 @@ function renderLogo(data) {
   const header =
   "<svg width=\"200\" height=\"250\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\">";
 
-  const tri = new Triangle();
-  tri.setColor("blue");
+  let shape;
+  switch(data.shape) {
+    case "circle":
+      shape = new Circle();
+      break;
+    case "triangle":
+      shape = new Triangle();
+      break;
+    default:
+      shape = new Square();
+  }
 
-  return header + tri.render() + "</svg>";
+  shape.setColor(data.logoColor);
+
+  return header + shape.render() + "</svg>";
 }
 
 function outputData(fileName, data) {
