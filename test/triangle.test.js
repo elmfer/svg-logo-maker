@@ -9,7 +9,7 @@ describe("Triangle" ,() => {
   describe("render", () => {
     it("Should output a SVG element string with correctly set parameters", () => {
       triangle.setColor('blue');
-      expect(triangle.render()).toEqual("<polygon points=\"0, 0 100, 200 200, 0\" fill=\"blue\"/>");
+      expect(triangle.render()).toEqual("<polygon points=\"0, 200 100, 0 200, 200\" fill=\"blue\"/>");
     });
   })
 });
