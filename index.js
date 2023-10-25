@@ -15,7 +15,7 @@ function isValidColor(colorString) {
     "white", "black", "gray", "red", "green", "blue", "yellow", "cyan", "magenta"
   ];
 
-  if(!KeywordColors.includes(colorString.toLowerCase()) && isNaN(colorString)) {
+  if(!KeywordColors.includes(colorString.toLowerCase()) && (colorString.startsWith("0x") || isNaN(colorString))) {
     return "Not a valid color";
   }
 
@@ -35,6 +35,23 @@ function inquireUser() {
       type: "input",
       name: "textColor",
       validate: isValidColor
+    },
+    {
+      message: "Logo shape",
+      type: "list",
+      name: "shape",
+      choices: [
+        "circle", "triangle", "square"
+      ]
+    },
+    {
+      message: "Logo color",
+      type: "input",
+      name: "logoColor",
+      validate: isValidColor
+    },
+    {
+
     }
   ];
 
