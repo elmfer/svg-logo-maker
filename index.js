@@ -8,6 +8,7 @@ const Square = require('./lib/square');
 const OUTPUT_DIR = "./out";
 const OUTPUT_FILENAME = "logo.svg";
 
+// A helper function that validates if a given brand name is less than 4 characters long and not empty
 function isBrandValid(brandName) {
   if(brandName.length === 0)
     return "Brand name must have at least one character";
@@ -18,6 +19,7 @@ function isBrandValid(brandName) {
   return true;
 }
 
+// A helper function that validates if a given string is a color
 function isValidColor(colorString) {
   const KeywordColors = [
     "white", "black", "gray", "red", "green", "blue", "yellow", "cyan", "magenta"
@@ -30,6 +32,7 @@ function isValidColor(colorString) {
   return true;
 }
 
+// Ask a list of questions to user about how they want their logo to look
 function inquireUser() {
   const Questions = [
     {
@@ -63,10 +66,12 @@ function inquireUser() {
   return inquirer.prompt(Questions);
 }
 
+// Generate SVG string the renders the desired logo
 function renderLogo(data) {
   const header =
   "<svg width=\"200\" height=\"200\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\">";
 
+  // Create shape based on user's input
   let shape;
   switch(data.shape) {
     case "circle":
@@ -79,11 +84,14 @@ function renderLogo(data) {
       shape = new Square();
   }
 
+  // Set Color based on user's input
   shape.setColor(data.logoColor);
 
   return header + shape.render() + renderText(data.brand, data.textColor) + "</svg>";
 }
 
+
+// Write to file in the `out` directory
 function outputData(fileName, data) {
   if(!fs.existsSync(OUTPUT_DIR))
     fs.mkdirSync(OUTPUT_DIR);
@@ -91,10 +99,12 @@ function outputData(fileName, data) {
   fs.writeFileSync(path.join(OUTPUT_DIR, fileName), data);
 }
 
+// Generate svg string the renders text
 function renderText(text, color = 'white') {
   return `<text x=\"100\" y=\"100\" dominant-baseline=\"middle\" text-anchor=\"middle\" fill=\"${color}\" font-size="100px">${text}</text>`;
 }
 
+// Entry point of the program
 function init() {
   inquireUser()
   .then((answers) => {
@@ -105,4 +115,5 @@ function init() {
   });
 }
 
+// Run entry point
 init();
