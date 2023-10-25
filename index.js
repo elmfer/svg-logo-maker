@@ -1,4 +1,10 @@
 const inquirer = require('inquirer');
+const path = require('path');
+const fs = require('fs');
+const Triangle = require('./lib/triangle');
+
+const OUTPUT_DIR = "./out";
+const OUTPUT_FILENAME = "logo.svg";
 
 function isBrandValid(brandName) {
   if(brandName.length === 0)
@@ -49,9 +55,6 @@ function inquireUser() {
       type: "input",
       name: "logoColor",
       validate: isValidColor
-    },
-    {
-
     }
   ];
 
@@ -59,11 +62,30 @@ function inquireUser() {
 }
 
 function renderLogo(data) {
-  
+  const header =
+  "<svg width=\"200\" height=\"250\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\">";
+
+  const tri = new Triangle();
+  tri.setColor("blue");
+
+  return header + tri.render() + "</svg>";
+}
+
+function outputData(fileName, data) {
+  if(!fs.existsSync(OUTPUT_DIR))
+    fs.mkdirSync(OUTPUT_DIR);
+
+  fs.writeFileSync(path.join(OUTPUT_DIR, fileName), data);
 }
 
 function init() {
-  inquireUser().then((answers) => console.log(answers));
+  inquireUser()
+  .then((answers) => {
+    const renderedLogo = renderLogo(answers);
+
+    outputData(OUTPUT_FILENAME, renderedLogo);
+    console.log("Successfully created logo at " + path.join(OUTPUT_DIR, OUTPUT_FILENAME));
+  });
 }
 
 init();
