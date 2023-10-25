@@ -10,16 +10,34 @@ function isBrandValid(brandName) {
   return true;
 }
 
-const Questions = [
-  {
-    message: "Name of your brand",
-    type: "input",
-    name: "brand",
-    validate: isBrandValid
+function isValidColor(colorString) {
+  const KeywordColors = [
+    "white", "black", "gray", "red", "green", "blue", "yellow", "cyan", "magenta"
+  ];
+
+  if(!KeywordColors.includes(colorString.toLowerCase()) && isNaN(colorString)) {
+    return "Not a valid color";
   }
-];
+
+  return true;
+}
 
 function inquireUser() {
+  const Questions = [
+    {
+      message: "Name of your brand",
+      type: "input",
+      name: "brand",
+      validate: isBrandValid
+    },
+    {
+      message: "Text color",
+      type: "input",
+      name: "textColor",
+      validate: isValidColor
+    }
+  ];
+
   return inquirer.prompt(Questions);
 }
 
