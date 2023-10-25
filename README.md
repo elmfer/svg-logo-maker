@@ -9,7 +9,8 @@ Walkthrough:
 
 ## Generated Samples
 
-![Example Logo](./example/logo.svg)
+![Example Logo 1](./example/logo.svg)
+![Example Logo 2](./example/logo2.svg)
  
 ## Table Of Contents
 1. [Installation](#installation)
