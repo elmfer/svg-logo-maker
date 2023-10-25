@@ -58,6 +58,10 @@ function inquireUser() {
   return inquirer.prompt(Questions);
 }
 
+function renderLogo(data) {
+  
+}
+
 function init() {
   inquireUser().then((answers) => console.log(answers));
 }
