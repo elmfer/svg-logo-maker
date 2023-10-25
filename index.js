@@ -81,7 +81,7 @@ function renderLogo(data) {
 
   shape.setColor(data.logoColor);
 
-  return header + shape.render() + "</svg>";
+  return header + shape.render() + renderText(data.brand, data.textColor) + "</svg>";
 }
 
 function outputData(fileName, data) {
@@ -89,6 +89,10 @@ function outputData(fileName, data) {
     fs.mkdirSync(OUTPUT_DIR);
 
   fs.writeFileSync(path.join(OUTPUT_DIR, fileName), data);
+}
+
+function renderText(text, color = 'white') {
+  return `<text x=\"100\" y=\"100\" dominant-baseline=\"middle\" text-anchor=\"middle\" fill=\"${color}\" font-size="100px">${text}</text>`;
 }
 
 function init() {
